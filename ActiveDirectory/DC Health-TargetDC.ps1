@@ -2,6 +2,7 @@
 <# 
 Domain Controller Health Report
 Owner: Bhagawan Tapase
+You run it like : .\DCHealth.ps1 -TargetDC DC01 or After running the script, you can enter the hostname in TargetDC
 #>
 [CmdletBinding()]
 Param(
