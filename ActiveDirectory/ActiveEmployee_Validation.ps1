@@ -1,3 +1,16 @@
+<#
+Script Name : AD_Employee_Lifecycle_Management.ps1
+ 
+Description :
+This script automates Active Directory employee lifecycle management by
+validating employee records from a CSV source, updating user attributes,
+managing account enable/disable actions based on employee status, and
+generating an audit report of all changes and account activities.
+ 
+Author : Bhagawan Tapase
+Version : 1.0
+#>
+
 Import-Module ActiveDirectory
 
 # ------------------------------------------------
