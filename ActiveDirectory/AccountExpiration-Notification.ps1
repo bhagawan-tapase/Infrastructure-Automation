@@ -1,3 +1,26 @@
+<#
+Script Name : AD_Account_Expiration_Notification.ps1
+
+Description :
+This script automates Active Directory account expiration notifications by
+identifying enabled user accounts scheduled to expire within a configurable
+notification window, notifying managers and affected users via email,
+calculating remaining days until expiration, and generating detailed logs
+for auditing and operational tracking.
+
+Key Features :
+- Detects AD accounts expiring within the notification period
+- Retrieves manager and user contact information
+- Sends consolidated notifications to managers
+- Adds affected users in BCC where applicable
+- Handles missing user and manager email scenarios
+- Generates professional HTML email notifications
+- Maintains detailed activity and error logs
+
+Author  : Bhagawan Tapase
+Version : 1.0
+#>
+
 Import-Module ActiveDirectory
 
 #----------------------------------------------------------
