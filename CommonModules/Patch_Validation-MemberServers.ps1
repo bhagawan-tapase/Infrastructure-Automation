@@ -18,7 +18,7 @@ Param(
 # ------------------------------
 # Email Settings 
 # ------------------------------
-$SmtpServer = '10.100.48.132'
+$SmtpServer = 'YourRelayServer'
 $SmtpPort   = 25
 $UseSsl     = $false
 
