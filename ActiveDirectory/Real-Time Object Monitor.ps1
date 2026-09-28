@@ -29,14 +29,14 @@ param(
 # =========================
 
 #region --- ACCOUNT watcher email settings ---
-$ASmtpServer      = 'YourRelayServer'
+$ASmtpServer      = '10.100.48.132'
 $ASmtpPort        = 25
 $AUseSsl          = $false
 
-$AFrom            = 'noreply@yourdomain.com'
+$AFrom            = 'bhagawan.tapase.ext@clubcar.com'
 $AFromDisplayName = 'Account Status Monitor'
-$ATo              = 'admin@yourdomain.com'
-$ACc              = 'dl-admin@yourdomain.com'
+$ATo              = 'bhagawan.tapase.ext@clubcar.com'
+$ACc              = 'aarti.mishra.ext@clubcar.com'
 $ABcc             = ''   # comma-separated BCC addresses for Account alerts
 $ASubjectDefault  = 'Real-time Alert: Account Status'
 
@@ -50,14 +50,14 @@ $ACredential = if ($ASmtpUser -and $ASmtpPass) {
 #endregion
 
 #region --- GROUP watcher email settings ---
-$GSmtpServer      = 'YourRelayServer'
+$GSmtpServer      = '10.100.48.132'
 $GSmtpPort        = 25
 $GUseSsl          = $false
 
-$GFrom            = 'noreply@yourdomain.com'
+$GFrom            = 'bhagawan.tapase.ext@clubcar.com'
 $GFromDisplayName = 'AD Group Monitor'
-$GTo              = 'admin@yourdomain.com'
-$GCc              = 'dl-admin@yourdomain.com'
+$GTo              = 'bhagawan.tapase.ext@clubcar.com'
+$GCc              = 'aarti.mishra.ext@clubcar.com'
 $GBcc             = ''   # comma-separated BCC addresses for Group alerts
 $GSubjectPrefix   = 'Group Membership Changed - '
 
@@ -114,7 +114,9 @@ function Write-LogG([string]$msg,[string]$level='INFO') {
 if ($ForceExitOld) {
   try {
     $patterns = @(
-      'AccountMonitor.ps1','Real-time Account monitor.ps1','AccountStatusWatcher','GroupMembershipWatcher' 
+      'AccountMonitor.ps1','Real-time Account monitor.ps1','Real-time Object monitor.ps1','Combined Real Time Alert.ps1',
+      'Unified-AccessMonitors.ps1','AccountStatusWatcher','GroupMembershipWatcher',
+      'AccountStatusWatcher-Central.ps1','GroupMembershipWatcher-Loop.ps1'
     )
     $procs = Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^(pwsh|powershell)(\.exe)?$' }
     $currentPid = $PID
@@ -297,7 +299,7 @@ if (Test-Path $GroupsFile) {
   try { $GroupsToWatch = Get-Content $GroupsFile | ConvertFrom-Json } catch { $GroupsToWatch = $null }
 }
 if (-not $GroupsToWatch -or $GroupsToWatch.Count -eq 0) {
-  $GroupsToWatch = @('Domain Admins','Enterprise Admins','DnsAdmins','CC_AD Admins','CC_Helpdesk Admins','CC_LAPS Viewer',
+  $GroupsToWatch = @('Domain Admins','Enterprise Admins','DnsAdmins','CC_AD Admins','CC_AD Master','CC_Helpdesk Admins','CC_LAPS Viewer',
     'CC_Local Admin-Servers','CC_Local Admins-Workstations','CC_MECM Access-FST','CC_NetRDP Access','CC_RDP Access','Administrators','Schema Admins','O365_E3')
 }
 
