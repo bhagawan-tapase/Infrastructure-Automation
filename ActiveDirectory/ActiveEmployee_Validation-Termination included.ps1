@@ -1,3 +1,26 @@
+<#
+Script Name : AD_Employee_Validation_and_Lifecycle_Management.ps1
+
+Description :
+This script automates Active Directory employee validation and lifecycle
+management by comparing user information from a CSV source against existing
+AD records. It updates user attributes such as Job Title, Department,
+Mobile Number, Office Phone, Office Location, Manager, and Country,
+disables accounts for non-active employees, and generates a detailed
+audit report of all changes, actions, and processing results.
+
+Key Features :
+- Validates Active Directory user accounts against CSV data
+- Updates user attributes when discrepancies are identified
+- Updates manager relationships and country information
+- Disables accounts marked as inactive or non-active
+- Tracks all changes and exceptions for audit purposes
+- Generates timestamped CSV reports for compliance and reporting
+
+Author  : Bhagawan Tapase
+Version : 1.0
+#>
+
 Import-Module ActiveDirectory
 
 # --------------------------------------------------
