@@ -34,10 +34,40 @@ Add-ADGroupMember `
   -Members bhagawan.tapase `
   -MemberTimeToLive (New-TimeSpan -Hours 1)
 
-#Step 4: Verify Remaining TTL
+#Step 4: Verify Remaining TTL in Second
 Get-ADGroup `
     -Identity "Domain Admins" `
     -Properties member `
     -ShowMemberTimeToLive |
 Select-Object -ExpandProperty member |
 Where-Object { $_ -match '<TTL=' }
+
+#Step 4: Verify Remaining TTL info with End Date.
+
+$SamAccountName = "Admin Account"
+
+try {
+    $DN = (Get-ADUser $SamAccountName -ErrorAction Stop).DistinguishedName
+
+    $entry = (Get-ADGroup "Domain Admins" -Properties member -ShowMemberTimeToLive).member |
+        Where-Object { $_ -like "*$DN*" }
+
+    if (-not $entry) {
+        Write-Host "$SamAccountName is not a member of Domain Admins." -ForegroundColor Yellow
+    }
+    elseif ($entry -match '<TTL=(\d+)>') {
+        $ttl = [int64]$Matches[1]
+
+        [PSCustomObject]@{
+            SamAccountName = $SamAccountName
+            TTLSeconds     = $ttl
+            ExpiryTime     = (Get-Date).AddSeconds($ttl)
+        } | Format-List
+    }
+    else {
+        Write-Host "$SamAccountName is a permanent member of Domain Admins (no TTL)." -ForegroundColor Cyan
+    }
+}
+catch {
+    Write-Host "User $SamAccountName not found." -ForegroundColor Red
+}
